@@ -1,0 +1,18 @@
+.columns-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 4em;
+
+  .left-column-container {
+    width: 25%;
+    margin-right: 4em;
+    border-top: 1px solid #CFCFCF;    
+  }
+
+  .right-column-container {
+    margin-left: 4em;
+    width: 30%;
+    border-top: 1px solid #CFCFCF;
+    height: auto;    
+  }
+}

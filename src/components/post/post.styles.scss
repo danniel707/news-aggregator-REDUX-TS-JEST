@@ -1,0 +1,72 @@
+
+.post-container {  
+  display: flex;  
+  max-width: 100%;
+  margin-bottom: 1em;
+  border-bottom: 1px solid lightgray; 
+  justify-content: space-between; 
+  
+  .post-content {
+    width: 100%;
+  
+    .post-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
+
+    .post-source {
+      font-size: 0.9em;
+      color: grey;
+    
+      span{
+        margin-left: 1em;
+      }
+    }
+
+    .post-description {
+      margin-top: 1em;
+      margin-bottom: 1em;    
+    }
+
+    .post-bottom-container {
+      font-size: 0.9em;
+      display: flex;  
+      justify-content: space-between;  
+
+      .hours-ago {
+        color: gray;
+        margin-bottom: 1em;
+      }  
+
+      .post-bottom-right-side {
+        display: flex;
+
+      }
+    }
+  }
+
+  .post-tools {
+    display: flex;
+    flex-direction: column; 
+     
+    .edit-post-button {
+      font-size: 1.3em;
+      color: #626262;
+      background-color: white;
+      border: none;
+      cursor: pointer;    
+      margin-bottom: 0.5em;
+      margin-left: 0.8em;
+      color: var(--theme-color);
+
+      &:hover {
+        color: var(--theme-on-hover);
+      }
+    }
+
+    .delete-post-button-container {
+      margin-left: 1em;
+    }
+  } 
+}

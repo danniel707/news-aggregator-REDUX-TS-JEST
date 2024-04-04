@@ -1,0 +1,28 @@
+
+.create-post-container {
+  margin-left: 1em;
+  margin-right: 1em;
+
+
+  h2 {
+    color: var(--theme-color);
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 0.5em;
+    margin-bottom: 1.2em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  textarea {  
+    height: 7em;
+    font-family: 'Roboto', sans-serif;
+  }
+}
