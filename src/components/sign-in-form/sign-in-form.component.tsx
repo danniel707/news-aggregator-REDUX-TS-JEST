@@ -79,6 +79,7 @@ const SignInForm: FC = () => {
 					required 
 					onChange={handleChange} 
 					name="email" 
+					id="email"
 					value={email}
 				/>
 			
@@ -87,7 +88,8 @@ const SignInForm: FC = () => {
 					type='password'
 					required 
 					onChange={handleChange} 
-					name="password" 
+					name="password"
+					id="password" 
 					value={password}
 				/>
 				<div className="buttons-container">

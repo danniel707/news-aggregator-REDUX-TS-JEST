@@ -1,11 +1,13 @@
 import React from 'react';
-import * as reactRedux from 'react-redux';
 
 import { screen, fireEvent } from '@testing-library/react';
 import Navigation from '../navigation.component';
 import { renderWithProviders } from '../../../utils/test-utils';
+import { signOutUser } from '../../../utils/firebase/firebase.utils';
 
-import { signOutStart } from '../../../store/user/user.action';
+jest.mock('../../../utils/firebase/firebase.utils', () => ({
+  signOutUser: jest.fn(),
+}));
 
 describe('Navigation tests', () => {
   test('It should render a Sign In link and not a Sign Out Link if there is no currentUser', () => {
@@ -76,25 +78,31 @@ describe('Navigation tests', () => {
     expect(screen.queryByText('John Doe')).toBeNull();  
   })
   
-  // test('It should dispatch signOutStart action when clicking on the Sign Out link', async () => {
-  //   const mockDispatch = jest.fn();    
-    
-  //   jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(mockDispatch);
-  //   renderWithProviders(<Navigation/>, {
-  //     preloadedState: {
-  //       user: {
-  //         currentUser: {}
-  //       }
-  //     }   
-  //   })
-  //   const signOutLinkElement = screen.getByText(/sign out/i);
-  //   expect(signOutLinkElement).toBeInTheDocument();
-    
-  //   await fireEvent.click(signOutLinkElement);    
-  //   expect(mockDispatch).toHaveBeenCalled();
+  test('Should call signOutUser when Sign Out is clicked', async () => {
+ 
+    renderWithProviders(<Navigation/>, {
+      preloadedState: {
+        user: {
+          currentUser: {}
+        }
+      }   
+    })
+   
+    fireEvent.click(screen.getByText('Sign Out'));
+    expect(signOutUser).toHaveBeenCalledTimes(1);
+  })
 
-  //   const signOutAction = signOutStart();
-  //   expect(mockDispatch).toHaveBeenCalledWith(signOutAction);
-  //   mockDispatch.mockClear();
-  // })
+   test('should navigate to auth page when Log In / Sign In is clicked', () => {
+    renderWithProviders(<Navigation/>, {
+      preloadedState: {
+        user: {
+          currentUser: null,  
+          userData: null 
+        }
+      }   
+    })
+
+    fireEvent.click(screen.getByText('Log In / Sign In'));
+    expect(window.location.pathname).toBe('/auth');
+  });
 });

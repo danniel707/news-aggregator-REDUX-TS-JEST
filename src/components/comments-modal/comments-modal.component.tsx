@@ -70,7 +70,7 @@ const CommentsModal: FC<Props> = ({ post, onCommentsQuantity }) => {
 
     setFormFields({...formFields, [name]: value})
   };
-  console.log('1  ',comments)
+
   const handleCommentsQuantity = (quantity: number) => {
     onCommentsQuantity(quantity)    
   }
@@ -87,6 +87,7 @@ const CommentsModal: FC<Props> = ({ post, onCommentsQuantity }) => {
           placeholder='Write a comment...'
           onChange={handleChange} 
           name="comment" 
+          id="comment"
           value={comment}
         />     
         <div className="comment-button-container"> 

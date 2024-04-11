@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, getByText, getByRole } from '@testing-library/react';
 import CommentsModal from '../comments-modal.component';
 import { useSelector } from 'react-redux';
-import { saveComment, fetchComments } from '../../../utils/firebase/firebase.utils';
+import { act } from 'react-dom/test-utils';
+import { saveComment, fetchComments, fetchUser } from '../../../utils/firebase/firebase.utils';
 
 // Mock useSelector
 jest.mock('react-redux', () => ({
@@ -18,19 +19,26 @@ jest.mock('../../../store/user/user.selector', () => ({
 jest.mock('../../../utils/firebase/firebase.utils', () => ({
   fetchComments: jest.fn(),
   saveComment: jest.fn(),
+  fetchUser: jest.fn(),
 }));
 
 describe('CommentsModal component', () => {
   const mockPost = { id: 'post1', title: 'Test Post' };
-  const mockUser = { uid: 'user1' };
+  const mockCurrentUser = { uid: 'user1' };
+  const mockUsers = [    
+    { userId: 'user2', displayName: 'User 2' },
+    { userId: 'user3', displayName: 'User 3' },
+  ];
   const mockComments: CommentFields[] = [
-    {     
+    { 
+      id: 'comment1',    
       postId: 'post1',
       userId: 'user2',
       comment: 'This is a great post!',
       createdAt: new Date().getTime(),
     },
     {      
+      id: 'comment2',
       postId: 'post1',
       userId: 'user3',
       comment: 'I agree with User 2.',
@@ -41,8 +49,14 @@ describe('CommentsModal component', () => {
   const mockOnCommentsQuantity = jest.fn();
 
   beforeEach(() => {
-    useSelector.mockReturnValue(mockUser);  
+    useSelector.mockReturnValue(mockCurrentUser);  
     fetchComments.mockResolvedValue(mockComments);  
+
+    // Mock fetchUser to return different values for different calls
+    fetchUser.mockImplementation((userId) => {
+      const user = mockUsers.find((user) => user.userId === userId);
+      return Promise.resolve(user);
+    });
   });
 
   afterEach(() => {
@@ -50,49 +64,58 @@ describe('CommentsModal component', () => {
   });
 
   test('renders comments modal correctly', async () => {
-    
+  
     const { getByText } = render(<CommentsModal post={mockPost} onCommentsQuantity={mockOnCommentsQuantity} />);
-    await waitFor(() => getByText('This is a great post!'));
+   
+    await waitFor(() => {
       expect(fetchComments).toHaveBeenCalledWith(mockPost.id);
       expect(getByText('Test Post')).toBeInTheDocument();
       expect(getByText('This is a great post!')).toBeInTheDocument();
       expect(getByText('I agree with User 2.')).toBeInTheDocument();
+    });
   });
 
   test('should allow the user to submit a comment if they are logged in', async () => {
     const mockComment = 'This is a test comment';
+    
     const { getByRole } = render(<CommentsModal post={mockPost} onCommentsQuantity={() => {}} />);
+    
     const commentInput = getByRole('textbox');
     const commentButton = getByRole('button');
 
-    fireEvent.change(commentInput, { target: { value: mockComment } });
-    expect(commentButton).not.toBeDisabled();
+    act(() => {
+      fireEvent.change(commentInput, { target: { value: mockComment } });
+    })
 
-    fireEvent.click(commentButton);
+    expect(commentButton).not.toBeDisabled();
+    
+    act(() => {
+      fireEvent.click(commentButton);
+     })
+    
     await waitFor(() => expect(saveComment).toHaveBeenCalled());
 
     expect(saveComment).toHaveBeenCalledWith({
           comment: mockComment,
           postId: mockPost.id,
-          userId: mockUser.uid,
+          userId: mockCurrentUser.uid,
           createdAt: expect.any(Number),
         });
   });
   
-  // test('handles form submission correctly', async () => {
-  //   const { getByText, getByPlaceholderText } = render(<CommentsModal post={mockPost} onCommentsQuantity={jest.fn()} />);
-  //   const commentInput = getByPlaceholderText('Write a comment...');
-  //   fireEvent.change(commentInput, { target: { value: 'New comment' } });
-  //   fireEvent.submit(getByText('Comment'));
-  //   await waitFor(() => {
-  //     expect(saveComment).toHaveBeenCalledWith({
-  //       userId: 'user1',
-  //       postId: 'post1',
-  //       comment: 'New comment',
-  //       createdAt: expect.any(Number),
-  //     });
-  //   });
-  // });
+  test('should not allow the user to submit a comment if they are not logged in', async () => {
+    useSelector.mockReturnValue(null);
+    
+    const { getByRole } = render(<CommentsModal post={mockPost} onCommentsQuantity={() => {}} />);
+    
+    const commentButton = getByRole('button');
 
-  // Additional tests for user interaction, error handling, etc.
+    expect(commentButton).toBeDisabled();
+    
+    act(() => {
+      fireEvent.click(commentButton);
+    });
+
+    expect(saveComment).not.toHaveBeenCalled();
+  });
 });

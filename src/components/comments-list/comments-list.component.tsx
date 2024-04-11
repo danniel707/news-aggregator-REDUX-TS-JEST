@@ -35,9 +35,9 @@ const CommentsList: FC<Props> = ({ currentUser, comments, onCommentsQuantity }) 
     const fetchUsersnames = async () => {
       try {//throws the error until finishing the loop
         const updatedCommentsInfo = comments ? await Promise.all(comments.map(async (comment) => {
-          
           let date: Date;
-          // Check if comment.createdAt is a number or a Timestamp
+          let hoursAgo: string = 'N.A';
+          // Check if post.createdAt is a number or a Timestamp
           if (typeof comment.createdAt === 'number') {
               // If it's a number, convert it to a Timestamp first
               const timestamp = Timestamp.fromMillis(comment.createdAt);
@@ -45,16 +45,18 @@ const CommentsList: FC<Props> = ({ currentUser, comments, onCommentsQuantity }) 
           } else {
             // Assuming it's a Timestamp
               const timestamp = comment.createdAt as Timestamp;
-              date = timestamp.toDate();
-          }      
-          const hoursAgo = (formatDistanceToNow(date)).replace('about', '') + ' ago'
-  
+              date = new Date(timestamp.seconds*1000 + timestamp.nanoseconds/100000) 
+          }
+          if (date !== null) {
+            hoursAgo = (formatDistanceToNow(date)).replace('about', '') + ' ago'  
+          } 
+       
           const user = await fetchUser(comment.userId);
          
           return { comment, displayName: user?.displayName, hoursAgo: hoursAgo };
          
         })) : [];
-        console.log('2    ',comments)
+      
         // Update the comments list after processing all comments
         setCommentsInfo(updatedCommentsInfo);
       } catch (error) {

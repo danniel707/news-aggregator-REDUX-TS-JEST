@@ -30,7 +30,7 @@ const PostComments: FC<{post: PostType}> = ({post}) => {
     	};
     	fetchCommentsQuantity();
  	}, [post.id])//The effect will be triggered whenever the value of postId changes.
-
+  	
 	const [isPostCommentsModalOpen, setIsPostCommentsModalOpen] = useState(false);
 	
 	const openPostCommentsModal = () => {

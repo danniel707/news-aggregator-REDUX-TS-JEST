@@ -8,8 +8,7 @@ import { Post } from '../../store/posts/posts.types';
 
 import FormInput from '../form-input/form-input.component'
 
-import { createPostDocument
-} from '../../utils/firebase/firebase.utils'
+import { createPostDocument } from '../../utils/firebase/firebase.utils'
 
 import './create-post-modal.styles.scss'
 
@@ -65,7 +64,8 @@ const CreatePostModal: FC<Props> = ({ onPostCreate }) => {
           type='text' 
           required 
           onChange={handleChange} 
-          name="title" 
+          name="title"
+          id="title"
           value={title}
         />     
         <FormInput 
@@ -74,6 +74,7 @@ const CreatePostModal: FC<Props> = ({ onPostCreate }) => {
           required 
           onChange={handleChange} 
           name="url" 
+          id="url" 
           value={url}
         />    
         <FormInput 
@@ -82,6 +83,7 @@ const CreatePostModal: FC<Props> = ({ onPostCreate }) => {
           required 
           onChange={handleChange} 
           name="description" 
+          id="description"
           value={description}
         />      
         <Button buttonType="createPost" type="submit">Create</Button>

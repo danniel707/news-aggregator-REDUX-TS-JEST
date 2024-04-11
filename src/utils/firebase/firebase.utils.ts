@@ -23,7 +23,7 @@ import {
 	setDoc,//completely overwrite a document with new data
 	addDoc,
 	updateDoc, //update specific fields of a document without overwriting the entire document
-	increment,
+	
 	collection, 
 	getDocs,
 	deleteDoc,
@@ -131,7 +131,7 @@ export const fetchUser = async (userId: string) => {
         //Reference to the specific user document
         const userDocRef = doc(db, 'users', userId);
         const userDoc = await getDoc(userDocRef);
-       
+       	
         const user = userDoc.data(); // Access the document data
  			  return user;
     } catch (error) {

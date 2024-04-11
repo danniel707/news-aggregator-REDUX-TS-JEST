@@ -1,15 +1,15 @@
 import { useState, FC, ChangeEvent, FormEvent  } from 'react';
 
-import Button from './button/button.component'
+import Button from '../button/button.component'
 
-import { updatePost } from '../store/posts/posts.action';
-import { Post as PostType } from '../store/posts/posts.types';
+import { updatePost } from '../../store/posts/posts.action';
+import { Post as PostType } from '../../store/posts/posts.types';
 
-import FormInput from './form-input/form-input.component'
+import FormInput from '../form-input/form-input.component'
 import { useDispatch } from 'react-redux'
 
 import { editPostDocument
-} from '../utils/firebase/firebase.utils'
+} from '../../utils/firebase/firebase.utils'
 
 type EditPostModalProps = {
   post: PostType;
@@ -25,7 +25,7 @@ const EditPostModal: FC<EditPostModalProps> = ({ post, onPostEdit }) => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    try {               
+    try {                     
        const updatedPost = await editPostDocument(formFields);       
        dispatch(updatePost(post.id, updatedPost!));
        onPostEdit()
@@ -51,6 +51,7 @@ const EditPostModal: FC<EditPostModalProps> = ({ post, onPostEdit }) => {
           required 
           onChange={handleChange} 
           name="title" 
+          id="title"
           value={formFields.title}
         />     
         <FormInput 
@@ -59,6 +60,7 @@ const EditPostModal: FC<EditPostModalProps> = ({ post, onPostEdit }) => {
           required 
           onChange={handleChange} 
           name="url" 
+          id="url"
           value={formFields.url}
         />    
         <FormInput 
@@ -67,6 +69,7 @@ const EditPostModal: FC<EditPostModalProps> = ({ post, onPostEdit }) => {
           required 
           onChange={handleChange} 
           name="description" 
+          id="description"
           value={formFields.description}
         />      
         <Button buttonType="createPost" type="submit">Save</Button>

@@ -81,6 +81,7 @@ const SignUpForm: FC = () => {
 					required 
 					onChange={handleChange} 
 					name="displayName" 
+					id="displayName"
 					value={displayName}
 				/>				
 				<FormInput 
@@ -89,6 +90,7 @@ const SignUpForm: FC = () => {
 					required 
 					onChange={handleChange} 
 					name="email" 
+					id="email"
 					value={email}
 				/>
 			
@@ -97,7 +99,8 @@ const SignUpForm: FC = () => {
 					type='password'
 					required 
 					onChange={handleChange} 
-					name="password" 
+					name="password"
+					id="password" 
 					value={password}
 				/>
 				
@@ -106,7 +109,8 @@ const SignUpForm: FC = () => {
 					type='password' 
 					required 
 					onChange={handleChange} 
-					name="confirmPassword" 
+					name="confirmPassword"
+					id="confirmPassword"  
 					value={confirmPassword}
 				/>
 				<div className="btn-container">

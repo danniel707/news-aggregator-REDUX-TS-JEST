@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectCurrentUser, selectUserData } from '../../store/user/user.selector'
 
 import PostComments from '../post-comments/post-comments.component'
-import EditPostModal from '../edit-post-modal.component';
+import EditPostModal from '../edit-post-modal/edit-post-modal.component';
 import Button from '../button/button.component'
 import LikeButton from '../like-button/like-button.component';
 
@@ -105,6 +105,7 @@ const Post: FC<Props> = ({ post, onPostDelete }) => {
 				<div className="post-tools">												
 					<button className="edit-post-button"						
 						onClick={openEditPostModal}
+						data-testid={`edit-post-button-${post.id}`}
 					>         		
 		        	<FontAwesomeIcon icon={faEdit} />
 		      		</button>
@@ -116,7 +117,11 @@ const Post: FC<Props> = ({ post, onPostDelete }) => {
 		      		<EditPostModal post={post} onPostEdit={handlePostEdit} />		      		     		
 		      		</Modal>
 		      		<div className="delete-post-button-container">
-						<Button buttonType='deletePost' onClick={handleDelete} data-testid={`delete-post-${post.id}`}>X</Button>
+						<Button 
+							buttonType='deletePost' 
+							onClick={handleDelete} 
+							data-testid={`delete-post-${post.id}`}
+						>X</Button>
 					</div>	
 			      </div>		      	
 			)}

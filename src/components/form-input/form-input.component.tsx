@@ -5,22 +5,23 @@ import './form-input.styles.scss'
 type Props = {
   label: string;
   type: 'textarea' | 'text' | 'password' | 'email';
+  id: string;
 } & ( | TextareaHTMLAttributes<HTMLTextAreaElement> | InputHTMLAttributes<HTMLInputElement>);
 
-const FormInput: FC<Props> = ({ label, type, ...otherProps }) => {
+const FormInput: FC<Props> = ({ label, type, id, ...otherProps }) => {
   if (type === 'textarea') {
     return (
       <div className="form">
-        <label className="form-labels">{label}</label>
-        <textarea className="form-fields textarea" {...otherProps as TextareaHTMLAttributes<HTMLTextAreaElement>} />
+        <label className="form-labels" htmlFor={id}>{label}</label>
+        <textarea className="form-fields textarea" id={id} {...otherProps as TextareaHTMLAttributes<HTMLTextAreaElement>} />
       </div>
     );
   }
 
   return (
     <div className="form">
-      <label className="form-labels">{label}</label>
-      <input className="form-fields" type={type} {...otherProps as InputHTMLAttributes<HTMLInputElement>} />
+      <label className="form-labels" htmlFor={id}>{label}</label>
+      <input className="form-fields" type={type} id={id} {...otherProps as InputHTMLAttributes<HTMLInputElement>} />
     </div>
   );
 };
