@@ -11,8 +11,13 @@
 }
 
 .logo {
-  font-size: 0.1em;
-  color: #76A0FF;
+  img {
+    margin-top: 0.1em;
+    margin-bottom: 0em;
+    height: 80px;
+    margin-left: 7em;
+  } 
+  
 }
 
 .nav-link {
@@ -24,7 +29,7 @@
 } 
 
 .title {
-  margin-left: 1.2em;
+  margin-left: -2em;
   font-size: 3.0em;
   font-family: 'Playfair Display', sans-serif; 
   font-weight: bold; 

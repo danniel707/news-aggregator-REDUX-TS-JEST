@@ -16,7 +16,9 @@ const Navigation: FC = () => {
   return (
     <Fragment>
       <div className="navigation-container">
-        <div className="logo">Logo</div>
+        <Link className="logo" to='/'>
+          <img src="../../../LogoNA.png" alt="Logo"></img>
+        </Link>
         <Link className="nav-link" to='/'>
           <div className="title">News Blog</div>
         </Link>
