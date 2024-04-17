@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import PostComments from '../post-comments.component';
 import { Post as PostType } from '../../../store/posts/posts.types';
-import { getPostCommentsQuantity } from '../../../utils/firebase/firebase.utils';
+import { getPostCommentsQuantity, getPostLikesQuantity } from '../../../utils/firebase/firebase.utils';
 import { useSelector } from 'react-redux';
 
 jest.mock('../../../utils/firebase/firebase.utils');

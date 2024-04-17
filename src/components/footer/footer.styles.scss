@@ -1,12 +1,32 @@
+// Variables
+$icon-size: 40px;
+$icon-hover-scale: 1.2;
+
+// Mixin for common styles
+@mixin social-icon {
+  color: white;
+  font-size: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $icon-size;
+  height: $icon-size;
+  border-radius: 50%;
+  transition: transform 0.3s; 
+
+  &:hover {
+    transform: scale($icon-hover-scale);
+  }
+}
 
 .footer {
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
   margin-top: 5em;
   padding: 2em;
   color: white;
-  background-color: #000000;
-  width: 100%; 
+  background-color: #303030;
+  width: 100%;
 
   .footer-left {
     display: flex;
@@ -15,34 +35,44 @@
     margin-left: 20em;
     padding-right: 15em;
     border-right: 2px solid var(--theme-color);
-  
+    
     span {
       margin-bottom: 1em;
     }
   }
 
-  .footer-right { 
-    height: auto;  
+  .footer-right {
+    height: auto;
     margin-right: 25em;
     margin-top: 1.5em;
     padding-left: 5em;
- 
+
     .fa-instagram {
-        color: white;
-        font-size: 24px;       
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px; 
-        height: 40px; 
-        border-radius: 20%; /* Makes the container round */    
-        transition: background-color 0.3s, transform 0.3s; /* Add transitions for a smooth hover effect */
-    
+      margin-right: 1em;
+      @include social-icon;
+      border-radius: 20%;
+            
       &:hover {
-        background: rgb(131,58,180);
-        background: linear-gradient(250deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 80%, rgba(252,176,69,1) 100%);
-       
-        transform: scale(1.2); /* Scale up the icon on hover */
+        background: linear-gradient(250deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 80%, rgba(252, 176, 69, 1) 100%);
+      }
+    }
+
+    .fa-x-twitter {
+      margin-right: 1em;
+      @include social-icon;
+      border-radius: 20%;
+     
+      &:hover {
+        background: black; // Ensure background is not applied by default
+      }
+    }
+
+    .fa-facebook {
+      @include social-icon;      
+
+      &:hover {
+        background: white; // Ensure background is not applied by default
+        color: #0866FF;
       }
     }
   }

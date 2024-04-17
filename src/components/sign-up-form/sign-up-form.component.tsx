@@ -26,7 +26,7 @@ const SignUpForm: FC = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const { displayName, email, password, confirmPassword } = formFields;
 	const dispatch = useDispatch();
-	const navigate = useNavigate(); // Initialize useHistory hook
+	const navigate = useNavigate(); 
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields);
